@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebSocket demo</title>
+    </head>
+    <body>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <button id='button'>do thing</button>
+      <button id='stop_btn'>stop</button>
+      <p id='err'>test</p>
+        <script>
+
+          var errp     = document.getElementById('err');
+          try {
+            var ws     = new WebSocket("ws://10.10.104.15:8765/");
+            console.log('trying to put onmessage');
+
+            ws.onmessage = function(event){
+              console.log('this is what the server said: ');
+              console.log(event.data);
+            }
+
+
+          }catch(err){
+            errp.innerHTML=err;
+          }
+
+
+
+
+          function on_click(){
+            try {
+              console.log("click");
+              errp.innerHTML='sending click now';
+              ws.send('chat message');
+            }catch(err){
+              errp.innerHTML=err;
+            }
+
+          }
+
+          function send_stop(){
+            console.log("sending stop");
+            ws.send('stop');
+          }
+
+          var button = document.getElementById('button');
+          var stop_btn = document.getElementById('stop_btn');
+
+
+          button.addEventListener("click", on_click);
+          stop_btn.addEventListener("click", send_stop);
+
+
+
+
+
+
+        </script>
+    </body>
+</html>
